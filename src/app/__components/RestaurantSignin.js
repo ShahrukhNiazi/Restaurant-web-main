@@ -1,5 +1,6 @@
  'use client';
 
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Container } from 'reactstrap';
@@ -11,11 +12,12 @@ const RestaurantSignin = () => {
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
   const [cntnum, setCntNum] = useState('');
+  const router = useRouter(); // Correct usage without arguments
 
   const handleSignup = async () => {
     console.log(email, pass, city, address, cntnum);
     try {
-      let result = await fetch('http://localhost:3000/api/restaurant', {
+      let response = await fetch('http://localhost:3000/api/restaurant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -23,8 +25,15 @@ const RestaurantSignin = () => {
         body: JSON.stringify({ email, pass, city, address, cntnum })
       });
 
-      result = await result.json();
-      console.log(result);
+      response = await response.json();
+      console.log(response);
+
+      if (response.success) {
+        const { result } = response;
+        delete result.pass;
+        localStorage.setItem("restaurantUser", JSON.stringify(result));
+        router.push("/restaurant");
+      }
     } catch (error) {
       console.error('Error:', error);
     }

@@ -18,4 +18,4 @@ function RestaurantFooter() {
   )
 }
 
-export default RestaurantFooter
+export default RestaurantFooter;
