@@ -1,5 +1,4 @@
  'use client';
-
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
@@ -12,9 +11,26 @@ const RestaurantSignin = () => {
   const [city, setCity] = useState('');
   const [address, setAddress] = useState('');
   const [cntnum, setCntNum] = useState('');
-  const router = useRouter(); // Correct usage without arguments
+  const router = useRouter(); 
+  const [error,setError]=useState(false);
+  const [passwordError,SetpasswordError]=useState(false)
 
   const handleSignup = async () => {
+ 
+    if(pass!==confirmPass){
+        SetpasswordError(true);
+        return false
+    }else{
+        SetpasswordError(false)
+    }
+    
+    if(!email || !pass || !city || !address || !cntnum){
+        setError(true);
+        return false
+    }else{
+        setError(false)
+    }
+  
     console.log(email, pass, city, address, cntnum);
     try {
       let response = await fetch('http://localhost:3000/api/restaurant', {
@@ -43,16 +59,40 @@ const RestaurantSignin = () => {
     <Container>
       <h3 className='mb-4'>Signin</h3>
       <Form.Control size="lg" type="email" placeholder="Enter Email address" value={email} onChange={(event) => setEmail(event.target.value)} />
+        {
+          error && !email && <div className='inputerror'> Incorrect Email </div>
+        }
       <br />
       <Form.Control size="lg" type="password" placeholder="Enter password" value={pass} onChange={(event) => setPass(event.target.value)} />
+        {
+          passwordError && <div className='inputerror'> Password and Conform password not match </div>
+        }
+        {
+          error && !pass && <div className='inputerror'> Incorrect Email </div>
+        }
       <br />
       <Form.Control size="lg" type="password" placeholder="Confirm password" value={confirmPass} onChange={(event) => setConfirmPass(event.target.value)} />
+        {
+          passwordError && <div className='inputerror'> Password and Conform password not match </div>
+        }
+        {
+          error && !confirmPass && <div className='inputerror'> Incorrect Email </div>
+        }
       <br />
       <Form.Control size="lg" type="text" placeholder="Enter City" value={city} onChange={(event) => setCity(event.target.value)} />
+        {
+          error && !city && <div className='inputerror'> Incorrect city </div>
+        }
       <br />
       <Form.Control size="lg" type="text" placeholder="Enter full Address" value={address} onChange={(event) => setAddress(event.target.value)} />
+        {
+          error && !address && <div className='inputerror'> Incorrect address </div>
+        }
       <br />
       <Form.Control size="lg" type="text" placeholder="Enter contact number" value={cntnum} onChange={(event) => setCntNum(event.target.value)} />
+        {
+          error && !cntnum && <div className='inputerror'> Incorrect Number </div>
+        }
       <br />
       <Button className='btn btn-primary mt-2' onClick={handleSignup}>Signin</Button>
     </Container>

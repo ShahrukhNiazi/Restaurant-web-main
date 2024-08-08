@@ -38,3 +38,12 @@
     align-items: center;
     margin: 0 auto;
 }
+
+.navbar-nav ul li {
+  display: inline-block;
+}
+
+.inputerror{
+  position: absolute;
+  color: rgb(241, 57, 57);
+}

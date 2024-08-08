@@ -8,6 +8,7 @@ export async function GET() {
     await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
     const data = await Restaurant.find();
     console.log(data);
+    await mongoose.connection.close(); // Close connection after operation
     return NextResponse.json({ result: true, data });
   } catch (error) {
     console.error('Error:', error);
@@ -17,10 +18,19 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    let payload = await request.json();
+    const payload = await request.json();
     await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
-    let restaurant = new Restaurant(payload);
-    const result = await restaurant.save();
+    let result;
+
+    if (payload.login) {
+      console.log('payload login', payload.email, payload.pass);
+      result = await Restaurant.findOne({ email: payload.email, pass: payload.pass });
+    } else {
+      const restaurant = new Restaurant(payload);
+      result = await restaurant.save();
+    }
+
+    await mongoose.connection.close(); // Close connection after operation
     return NextResponse.json({ result, success: true });
   } catch (error) {
     console.error('Error:', error);
