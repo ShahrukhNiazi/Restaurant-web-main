@@ -42,13 +42,15 @@ const RestaurantSignin = () => {
       });
 
       response = await response.json();
-      console.log(response);
-
+ 
       if (response.success) {
         const { result } = response;
         delete result.pass;
-        localStorage.setItem("restaurantUser", JSON.stringify(result));
+       
+        responecheck = localStorage.setItem("restaurantUser", JSON.stringify(result));
+        console.log(responecheck);
         router.push("/restaurant");
+        
       }
     } catch (error) {
       console.error('Error:', error);

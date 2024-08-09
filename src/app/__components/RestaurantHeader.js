@@ -60,8 +60,9 @@ const RestaurantHeader = () => {
                   </li>
                 </>
               )}
+           
             </ul>
-          </Nav>
+           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
