@@ -7,10 +7,24 @@ const AddFoodItems = () => {
     const [price, setPrice] = useState('');
     const [path, setPath] = useState('');
     const [description, setDescription] = useState('');
-    const [error, setError] = useState({});
+    const [error, setError] = useState(false);
 
     const handleAddFoodItem = async () => {
         console.log(name, price, path, description);
+
+        if (!name || !price || !path || !description) {
+             
+            setError(true);
+            
+            return false
+
+        } else {
+
+            setError(false)
+
+        }
+
+
         let resto_id;
         const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
         if (restaurantData) {
@@ -31,10 +45,15 @@ const AddFoodItems = () => {
             }
 
             const data = await response.json();
+
             console.log(data);
 
             if (data.success) {
+
                 alert("Food item added");
+
+                const data = { ...data.data };
+
             } else {
                 alert("Failed to add food item");
             }
@@ -59,6 +78,8 @@ const AddFoodItems = () => {
                         onChange={(e) => setName(e.target.value)}
                         isInvalid={!!error.name}
                     />
+                    {error && !name &&  <div className='inputerror'> Invalid food name </div>}
+
                     <br />
                     <Form.Control
                         size="lg"
@@ -69,6 +90,7 @@ const AddFoodItems = () => {
                         onChange={(e) => setPrice(e.target.value)}
                         isInvalid={!!error.price}
                     />
+                    {error && !price && <div className='inputerror'> Invalid food price </div>}
                     <br />
                     <Form.Control
                         size="lg"
@@ -79,6 +101,7 @@ const AddFoodItems = () => {
                         onChange={(e) => setPath(e.target.value)}
                         isInvalid={!!error.path}
                     />
+                      {error && !path && <div className='inputerror'> Invalid food Path </div>}
                     <br />
                     <Form.Control
                         size="lg"
@@ -89,6 +112,7 @@ const AddFoodItems = () => {
                         onChange={(e) => setDescription(e.target.value)}
                         isInvalid={!!error.description}
                     />
+                     {error && !description && <div className='inputerror'> Invalid food Path </div>}
                     <br />
                     <Button className="btn btn-primary" onClick={handleAddFoodItem}>
                         Add Food Item
