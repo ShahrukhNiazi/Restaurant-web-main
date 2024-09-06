@@ -47,3 +47,38 @@
   position: absolute;
   color: rgb(241, 57, 57);
 }
+
+table {
+   width: 100%;
+ }
+
+ .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+.table thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+} 
+
+
+.dashboard-main .offset-md-1 {
+  margin-left: 2.333333%;
+}

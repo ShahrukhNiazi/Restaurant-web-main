@@ -13,9 +13,9 @@ const AddFoodItems = () => {
         console.log(name, price, path, description);
 
         if (!name || !price || !path || !description) {
-             
+
             setError(true);
-            
+
             return false
 
         } else {
@@ -78,7 +78,7 @@ const AddFoodItems = () => {
                         onChange={(e) => setName(e.target.value)}
                         isInvalid={!!error.name}
                     />
-                    {error && !name &&  <div className='inputerror'> Invalid food name </div>}
+                    {error && !name && <div className='inputerror'> Invalid food name </div>}
 
                     <br />
                     <Form.Control
@@ -101,7 +101,7 @@ const AddFoodItems = () => {
                         onChange={(e) => setPath(e.target.value)}
                         isInvalid={!!error.path}
                     />
-                      {error && !path && <div className='inputerror'> Invalid food Path </div>}
+                    {error && !path && <div className='inputerror'> Invalid food Path </div>}
                     <br />
                     <Form.Control
                         size="lg"
@@ -112,7 +112,7 @@ const AddFoodItems = () => {
                         onChange={(e) => setDescription(e.target.value)}
                         isInvalid={!!error.description}
                     />
-                     {error && !description && <div className='inputerror'> Invalid food Path </div>}
+                    {error && !description && <div className='inputerror'> Invalid food Path </div>}
                     <br />
                     <Button className="btn btn-primary" onClick={handleAddFoodItem}>
                         Add Food Item
