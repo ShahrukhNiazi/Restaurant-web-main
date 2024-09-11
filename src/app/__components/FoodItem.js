@@ -11,8 +11,21 @@ const AddFoodItem = () => {
     }, []);
 
     const loadFoodItems = async () => {
+        const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
+
+        // Check if restaurantData exists and has an _id 
+
+        if (!restaurantData || !restaurantData._id) {
+            console.error("No restaurant data or _id found in localStorage");
+            alert("No restaurant data found. Please log in or select a restaurant.");
+            return;
+        }
+
+        const resto_id = restaurantData._id;
+        console.log("Restaurant ID:", resto_id);
+
         try {
-            let response = await fetch("http://localhost:3000/api/restaurant/foods/66c639deaf293571edfe213e");
+            let response = await fetch("http://localhost:3000/api/restaurant/foods/"+resto_id);
             response = await response.json();
 
             if (response.success) {
@@ -42,12 +55,12 @@ const AddFoodItem = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {foodItems.length > 0 ? (
+                         {foodItems.length > 0 ? (
                                 foodItems.map((item, key) => (
                                     <tr key={key}>
-                                        <td>{item.id}</td>
+                                        <td>{key+1}</td>
                                         <td>{item.name}</td>
-                                        <td>{item.price}</td> {/* Assuming you want to show price here */}
+                                        <td>{item.price}</td>
                                         <td>{item.description}</td>
                                         <td><img src={item.img_path} alt={item.name} style={{ width: '50px', height: '50px' }} /></td>
                                         <td>

@@ -38,10 +38,8 @@ export async function DELETE(request,content) {
    const result = await foodsSchema.deleteOne({_id:id})
 
    if(result){
-
-        success=true
-
-   }
+         success=true
+    }
 
    return NextResponse.json({result,success})
 

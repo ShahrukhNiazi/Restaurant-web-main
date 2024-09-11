@@ -13,17 +13,11 @@ const AddFoodItems = () => {
         console.log(name, price, path, description);
 
         if (!name || !price || !path || !description) {
-
             setError(true);
-
-            return false
-
+            return false;
         } else {
-
-            setError(false)
-
+            setError(false);
         }
-
 
         let resto_id;
         const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
@@ -49,11 +43,12 @@ const AddFoodItems = () => {
             console.log(data);
 
             if (data.success) {
-
                 alert("Food item added");
 
-                const data = { ...data.data };
+                // No need to redefine `data`
+                const newData = { ...data.data };
 
+                // Do something with `newData` if needed
             } else {
                 alert("Failed to add food item");
             }
