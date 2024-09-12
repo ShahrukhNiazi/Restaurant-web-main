@@ -8,4 +8,5 @@ const restaurantSchema = new mongoose.Schema({
   cntnum: String,
 });
 
-export const Restaurant = mongoose.model('Restaurants', restaurantSchema);
+// Check if the model already exists
+export const Restaurant = mongoose.models.Restaurants || mongoose.model('Restaurants', restaurantSchema);

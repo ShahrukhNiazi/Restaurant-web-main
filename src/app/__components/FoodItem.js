@@ -25,7 +25,7 @@ const AddFoodItem = () => {
         console.log("Restaurant ID:", resto_id);
 
         try {
-            let response = await fetch("http://localhost:3000/api/restaurant/foods/"+resto_id);
+            let response = await fetch("http://localhost:3000/api/restaurant/foods/" + resto_id);
             response = await response.json();
 
             if (response.success) {
@@ -55,10 +55,10 @@ const AddFoodItem = () => {
                             </tr>
                         </thead>
                         <tbody>
-                         {foodItems.length > 0 ? (
+                            {foodItems.length > 0 ? (
                                 foodItems.map((item, key) => (
                                     <tr key={key}>
-                                        <td>{key+1}</td>
+                                        <td>{key + 1}</td>
                                         <td>{item.name}</td>
                                         <td>{item.price}</td>
                                         <td>{item.description}</td>
