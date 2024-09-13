@@ -6,6 +6,15 @@ const nextConfig = {
       }
       return config;
     },
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'static.tildacdn.com',
+          pathname: '/**', // yeh pattern allow karega static.tildacdn.com se saari images ko
+        },
+      ],
+    },
   };
   
   export default nextConfig;

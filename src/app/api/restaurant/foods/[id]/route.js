@@ -35,7 +35,7 @@ export async function DELETE(request, content) {
 
     let success = false;
 
-    await mongoose.connect(connectionStr, { useNewUrlParser: true });
+    await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
     const result = await foodsSchema.deleteOne({ _id: id })
 
     if (result) {

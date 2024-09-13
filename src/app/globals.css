@@ -43,6 +43,10 @@
   display: inline-block;
 }
 
+.table > tbody {
+  vertical-align: middle !important;
+}
+
 .inputerror{
   position: absolute;
   color: rgb(241, 57, 57);
@@ -57,7 +61,7 @@ table {
   border-collapse: collapse;
   margin: 20px 0;
   font-size: 18px;
-  text-align: left;
+  text-align: center;
 }
 
 .table thead {

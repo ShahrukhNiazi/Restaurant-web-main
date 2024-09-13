@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import Image from 'next/image';
+
 
 const AddFoodItem = () => {
     // Initialize with an empty array
@@ -39,6 +41,22 @@ const AddFoodItem = () => {
         }
     };
 
+
+    const deletFoodItems = async (id) => {
+
+        let response = await fetch("http://localhost:3000/api/restaurant/foods/" + id, {
+            method: 'delete'
+        });
+
+        response = await response.json();
+        if (response.success) {
+            loadFoodItems();
+        } else {
+            alert("food item not deleted");
+        }
+    }
+
+
     return (
         <Container>
             <Row>
@@ -62,9 +80,9 @@ const AddFoodItem = () => {
                                         <td>{item.name}</td>
                                         <td>{item.price}</td>
                                         <td>{item.description}</td>
-                                        <td><img src={item.img_path} alt={item.name} style={{ width: '50px', height: '50px' }} /></td>
-                                        <td>
-                                            <Button className="btn btn-primary">Delete</Button>
+                                        <td className='text-center'><img src={item.img_path} alt={item.name} width={80} height={80} /></td>
+                                        <td className='text-center'>
+                                            <Button className="btn btn-primary" onClick={()=>deletFoodItems(item._id)}>Delete</Button>
                                             <Button className="btn btn-primary">Edit</Button>
                                         </td>
                                     </tr>

@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    await mongoose.connect(connectionStr);
+    await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
     const data = await Restaurant.find();
     console.log(data);
     await mongoose.connection.close(); // Close connection after operation
@@ -19,7 +19,7 @@ export async function GET() {
 export async function POST(request) {
   try {
     const payload = await request.json();
-    await mongoose.connect(connectionStr);
+    await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
     let result;
     let success = false;
 
