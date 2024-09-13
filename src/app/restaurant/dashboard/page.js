@@ -7,7 +7,7 @@ import AddFoodiItem from '../../__components/AddFooditem';
 import FoodItem from '../../__components/FoodItem';
 
 
-const Dashboard = () => {
+const Dashboard = (props) => {
 
   const [addItem, setAddItem] = useState(false); // Use a boolean to control the visibility
 
@@ -25,7 +25,7 @@ const Dashboard = () => {
         <Row className='align-items-center justify-content-center'>
           <Col className='col-lg-12'>
             {
-              addItem ? <AddFoodiItem /> : <FoodItem/>
+              addItem ? <AddFoodiItem setAddItem={setAddItem}/> : <FoodItem/>
             }
           </Col>
         </Row>

@@ -44,7 +44,7 @@ const AddFoodItems = () => {
 
             if (data.success) {
                 alert("Food item added");
-
+                props.setAddItem(false);
                 // No need to redefine `data`
                 const newData = { ...data.data };
 
