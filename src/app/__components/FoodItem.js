@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 
 const AddFoodItem = () => {
     // Initialize with an empty array
     const [foodItems, setFoodItems] = useState([]);
+    const router = useRouter();
 
     useEffect(() => {
         loadFoodItems();
@@ -73,7 +74,7 @@ const AddFoodItem = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {foodItems.length > 0 ? (
+                            { foodItems.length > 0 ? (
                                 foodItems.map((item, key) => (
                                     <tr key={key}>
                                         <td>{key + 1}</td>
@@ -83,7 +84,7 @@ const AddFoodItem = () => {
                                         <td className='text-center'><img src={item.img_path} alt={item.name} width={80} height={80} /></td>
                                         <td className='text-center'>
                                             <Button className="btn btn-primary" onClick={()=>deletFoodItems(item._id)}>Delete</Button>
-                                            <Button className="btn btn-primary">Edit</Button>
+                                            <Button className="btn btn-primary" onClick={()=>router.push('dashboard/'+item_id)}>Edit</Button>
                                         </td>
                                     </tr>
                                 ))
