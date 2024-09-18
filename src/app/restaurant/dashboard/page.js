@@ -22,7 +22,7 @@ const Dashboard = (props) => {
             <Button onClick={() => setAddItem(false)} className='mt-4 offset-md-1'>Dashboard</Button>
           </Col>
         </Row>
-        <Row className='align-items-center justify-content-center'>
+        <Row className='align-items-center justify-content-center 100-vh'>
           <Col className='col-lg-12'>
             {
               addItem ? <AddFoodiItem setAddItem={setAddItem}/> : <FoodItem/>

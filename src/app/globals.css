@@ -89,3 +89,7 @@ table {
 .table th, .table td button:nth-child(1) {
   margin-right: 10px;
 }
+
+.height-vh {
+  height: 100vh;
+}

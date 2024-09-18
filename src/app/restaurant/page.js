@@ -16,7 +16,7 @@ const restaurant = () => {
     <>
       <Header />
       <Container>
-        <Row className='align-items-center justify-content-center'>
+        <Row className='align-items-center justify-content-center height-vh'>
           <Col className='col-lg-6'>
             <h1 className='mt-5 mb-5'>Restarant Signin / Login</h1>
             {
