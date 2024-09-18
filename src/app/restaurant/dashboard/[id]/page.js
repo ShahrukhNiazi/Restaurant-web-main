@@ -12,7 +12,7 @@ const EditAddFoodItems = (props) => {
     const router = useRouter();
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [path, setPath] = useState('');
+    const [img_path, setPath] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState(false);
 
@@ -36,13 +36,25 @@ const EditAddFoodItems = (props) => {
     }
 
     const handleAddFoodItem = async () => {
-        console.log(name, price, path, description);
-        if (!name || !price || !path || !description) {
+        console.log(name, price, img_path, description);
+        if (!name || !price || !img_path || !description) {
             setError(true);
             return false;
         } else {
             setError(false);
         }
+
+       let response = await fetch('http://localhost:3000/api/restaurant/foods/edit/' + props.params.id,{
+         method:'PUT',
+         body:JSON.stringify({name,price,img_path,description})
+      });
+
+      response = await response.json();
+
+       if(response.success){
+          alert("data has bees updated ")
+       }
+
     }
 
 
@@ -78,11 +90,11 @@ const EditAddFoodItems = (props) => {
                         type="text"
                         placeholder="Enter path"
                         className='mb-3'
-                        value={path}
+                        value={img_path}
                         onChange={(e) => setPath(e.target.value)}
-                        isInvalid={!!error.path}
+                        isInvalid={!!error.img_path}
                     />
-                    {error && !path && <div className='inputerror'> Invalid food Path </div>}
+                    {error && !img_path && <div className='inputerror'> Invalid food Path </div>}
                     <br />
                     <Form.Control
                         size="lg"

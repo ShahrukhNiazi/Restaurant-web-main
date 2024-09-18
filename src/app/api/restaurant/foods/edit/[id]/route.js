@@ -1,4 +1,4 @@
-import mongoose from "mongoose"; 
+import mongoose, { connect } from "mongoose"; 
 import { ObjectId } from "mongodb";  // Use this instead of mongoose ObjectId
 import { connectionStr } from "@/app/lib/db";
 import { foodsSchema } from "@/app/lib/foodsModel";
@@ -24,4 +24,27 @@ export async function GET(request, content) {
     console.error("Error fetching data:", error);
     return NextResponse.json({ error: "An error occurred while fetching the data", success });
   }
+}
+
+
+
+export async function PUT(request, content){
+
+  const id = content.params.id;
+  
+  const payload = await request.json();
+
+  let success = false;
+
+  await mongoose.connect(connectionStr, {useNewUrlParser:true, useUnifiedTopology: true });
+
+  const result = await foodsSchema.findOneAndUpdate({_id:id},payload)
+
+  if(result){
+      success = true;
+   }
+  
+   return NextResponse.json({result,success})
+
+
 }

@@ -46,7 +46,7 @@ const AddFoodItem = () => {
     const deletFoodItems = async (id) => {
 
         let response = await fetch("http://localhost:3000/api/restaurant/foods/" + id, {
-            method: 'delete'
+          method: 'delete'
         });
 
         response = await response.json();
@@ -84,7 +84,7 @@ const AddFoodItem = () => {
                                         <td className='text-center'><img src={item.img_path} alt={item.name} width={80} height={80} /></td>
                                         <td className='text-center'>
                                             <Button className="btn btn-primary" onClick={()=>deletFoodItems(item._id)}>Delete</Button>
-                                            <Button className="btn btn-primary" onClick={()=>router.push('dashboard/'+item_id)}>Edit</Button>
+                                            <Button className="btn btn-primary" onClick={()=>router.push('dashboard/'+item._id)}>Edit</Button>
                                         </td>
                                     </tr>
                                 ))
