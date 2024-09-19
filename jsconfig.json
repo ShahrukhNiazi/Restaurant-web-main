@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "https://yandex.com/images/", // Make sure to set the baseUrl
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
-    },
-   }
+    }
+  }
 }

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import RestaurantLogin from '../__components/RestaurantLogin';
 import RestaurantSignin from '../__components/RestaurantSignin';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Header from '../__components/RestaurantHeader'
+import Header from '../__components/RestaurantHeader';
 import Footer from '../__components/Footer';
 
 const restaurant = () => {

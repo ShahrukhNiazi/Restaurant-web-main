@@ -1,15 +1,15 @@
+import { connectionStr } from "@/app/lib/db";
+import { Restaurant } from "@/app/lib/restaurantModel";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
-import { connectionStr } from "../../../lib/db";
-import restaurantSchema from "@/app/lib/restaurantModel";
 
 export async function GET() {
-  
-  await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true })
+  await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
+  let result = await Restaurant.find();
+  result = result.map((item)=>item.city);
+  result = [...new Set(result.map((item)=>item))]
 
-  let result = await restaurantSchema.find();
-
+  console.log(result);
+  await mongoose.connection.close(); // Close connection after operation
   return NextResponse.json({ success: true, result });
-
-
 }

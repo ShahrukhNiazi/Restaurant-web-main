@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation'; // usePathname to get the current pathname
 import Nav from 'react-bootstrap/Nav';
@@ -60,7 +61,7 @@ const RestaurantHeader = () => {
                   </li>
                 </>
               )}
-             </ul>
+            </ul>
           </Nav>
         </Navbar.Collapse>
       </Container>
