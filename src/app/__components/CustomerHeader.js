@@ -21,13 +21,13 @@ const Customerheader = () => {
                                     <Nav.Link href="#">Home</Nav.Link>
                                 </li>
                                 <li>
-                                    <Nav.Link href="#">About us</Nav.Link>
+                                    <Nav.Link href="#">Login</Nav.Link>
                                 </li>
                                 <li>
-                                    <Nav.Link href="#">Services</Nav.Link>
+                                    <Nav.Link href="#">Sign up</Nav.Link>
                                 </li>
                                 <li>
-                                    <Nav.Link href="#">About</Nav.Link>
+                                    <Nav.Link href="#">cart(0)</Nav.Link>
                                 </li>
                             </ul>
                         </Nav>
