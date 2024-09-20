@@ -116,8 +116,10 @@ thead, tbody, tfoot, tr, td img {
   border-radius: 0px;
 }
 
-.input-wrapper .d-flex input:nth-child(1) {
+.input-wrapper .d-flex select {
   width:310px;
+  border-radius: 0px;
+
 }
 .input-wrapper {
   padding: 45px 0;

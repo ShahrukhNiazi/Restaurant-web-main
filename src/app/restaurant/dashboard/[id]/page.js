@@ -18,7 +18,7 @@ const EditAddFoodItems = (props) => {
 
     useEffect(() => {
         handleLoadFoodItem();
-    },[])
+    }, [])
 
 
 
@@ -31,8 +31,8 @@ const EditAddFoodItems = (props) => {
             setPrice(response.result.price)
             setPath(response.result.img_path)
             setDescription(response.result.description)
-         }
- 
+        }
+
     }
 
     const handleAddFoodItem = async () => {
@@ -44,16 +44,16 @@ const EditAddFoodItems = (props) => {
             setError(false);
         }
 
-       let response = await fetch('http://localhost:3000/api/restaurant/foods/edit/' + props.params.id,{
-         method:'PUT',
-         body:JSON.stringify({name,price,img_path,description})
-      });
+        let response = await fetch('http://localhost:3000/api/restaurant/foods/edit/' + props.params.id, {
+            method: 'PUT',
+            body: JSON.stringify({ name, price, img_path, description })
+        });
 
-      response = await response.json();
+        response = await response.json();
 
-       if(response.success){
-          alert("data has bees updated ")
-       }
+        if (response.success) {
+            alert("data has bees updated ")
+        }
 
     }
 
