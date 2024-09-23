@@ -6,6 +6,7 @@ import { Container } from 'reactstrap';
 
 const RestaurantSignin = () => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [pass, setPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [city, setCity] = useState('');
@@ -24,21 +25,21 @@ const RestaurantSignin = () => {
         SetpasswordError(false)
     }
     
-    if(!email || !pass || !city || !address || !cntnum){
+    if(!email || !name  || !pass || !city || !address || !cntnum){
         setError(true);
         return false
     }else{
         setError(false)
     }
   
-    console.log(email, pass, city, address, cntnum);
+    console.log(email, name ,pass, city, address, cntnum);
     try {
       let response = await fetch('http://localhost:3000/api/restaurant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, pass, city, address, cntnum })
+        body: JSON.stringify({ email, name, pass, city, address, cntnum })
       });
 
       response = await response.json();
@@ -63,6 +64,11 @@ const RestaurantSignin = () => {
       <Form.Control size="lg" type="email" placeholder="Enter Email address" value={email} onChange={(event) => setEmail(event.target.value)} />
         {
           error && !email && <div className='inputerror'> Incorrect Email </div>
+        }
+      <br />
+      <Form.Control size="lg" type="Name" placeholder="Enter Name" value={name} onChange={(event) => setName(event.target.value)} />
+        {
+          error && !name && <div className='inputerror'> Incorrect name </div>
         }
       <br />
       <Form.Control size="lg" type="password" placeholder="Enter password" value={pass} onChange={(event) => setPass(event.target.value)} />

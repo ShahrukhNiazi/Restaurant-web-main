@@ -3,17 +3,30 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import { Restaurant } from "@/app/lib/restaurantModel";
 
-export async function GET(request){
+export async function GET(request) {
 
- let queryParams = request.nextUrl.searchParams
+  let queryParams = request.nextUrl.searchParams
 
- console.log(queryParams.get('restaurant'))
+  console.log(queryParams.get('restaurant'))
 
- await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
+  let filter = {};
 
-  let result = await Restaurant.find();
+  if(queryParams.get('location')) {
 
-  return NextResponse.json({success:true,result})
+    let city = queryParams.get('location');
+    filter = { city: { $regex: new RegExp(city, 'i') } }
+
+  }else if(queryParams.get('restaurant')){
+
+    let address = queryParams.get('restaurant');
+    filter = { address: { $regex: new RegExp(address, 'i') } }
+  }
+
+  await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  let result = await Restaurant.find(filter);
+
+  return NextResponse.json({ success: true, result });
 
 
 }
