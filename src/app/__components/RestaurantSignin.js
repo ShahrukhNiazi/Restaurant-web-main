@@ -25,14 +25,14 @@ const RestaurantSignin = () => {
         SetpasswordError(false)
     }
     
-    if(!email || !name  || !pass || !city || !address || !cntnum){
+    if(!email || !name || !pass || !city || !address || !cntnum){
         setError(true);
         return false
     }else{
         setError(false)
     }
   
-    console.log(email, name ,pass, city, address, cntnum);
+    console.log(email, pass, city, address, cntnum);
     try {
       let response = await fetch('http://localhost:3000/api/restaurant', {
         method: 'POST',
@@ -66,7 +66,7 @@ const RestaurantSignin = () => {
           error && !email && <div className='inputerror'> Incorrect Email </div>
         }
       <br />
-      <Form.Control size="lg" type="Name" placeholder="Enter Name" value={name} onChange={(event) => setName(event.target.value)} />
+      <Form.Control size="lg" type="text" placeholder="Enter Name" value={name} onChange={(event) => setName(event.target.value)} />
         {
           error && !name && <div className='inputerror'> Incorrect name </div>
         }

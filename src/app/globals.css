@@ -103,7 +103,7 @@ thead, tbody, tfoot, tr, td img {
 }
 
 .customer-footer-sec {
-  position: absolute;
+  position: relative;
   bottom: 0;
   padding: 40px 0;
   width: 100%;
