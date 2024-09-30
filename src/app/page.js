@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
 
-  const [locations, setlocations] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     loadRestaurants();
@@ -21,16 +23,14 @@ export default function Home() {
     try {
       let response = await fetch("http://localhost:3000/api/customer/locations");
 
-      // Check if the response status is OK (status code 200-299)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Try parsing the response as JSON
       let data = await response.json();
 
       if (data.success) {
-        setlocations(data.result);
+        setLocations(data.result);
       } else {
         console.error('API responded with an error:', data.message || 'Unknown error');
       }
@@ -39,26 +39,44 @@ export default function Home() {
     }
   };
 
-  const loadRestaurants = async () => {
-    try {
-      let response = await fetch("http://localhost:3000/api/customer");
+  const loadRestaurants = async (params = {}) => {
+    let url = "http://localhost:3000/api/customer";
 
-      // Check if the response status is OK (status code 200-299)
+    if (params.locations) {
+      url = `?/locations=`+params.locations;
+    } else if (params.restaurants) {
+      url = `?/restaurants`+params.restaurants;
+    }
+
+    try {
+      let response = await fetch(url);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Try parsing the response as JSON
       let data = await response.json();
 
       if (data.success) {
-        setRestaurants(data.result); // Correctly setting restaurants here
+        setRestaurants(data.result);
       } else {
         console.error('API responded with an error:', data.message || 'Unknown error');
       }
     } catch (error) {
       console.error('An error occurred while fetching restaurants:', error.message);
     }
+  };
+
+  const handleLocationChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedLocation(selectedValue);
+    loadRestaurants({ locations: selectedValue });
+  };
+
+  const handleSearchChange = (event) => {
+    const searchValue = event.target.value;
+    setSearchText(searchValue);
+    loadRestaurants({ restaurants: searchValue });
   };
 
   return (
@@ -69,18 +87,23 @@ export default function Home() {
         <Container>
           <Row>
             <Col className='col-lg-12 col-sm-12 col-12'>
-              <h1 className="color-white">Food delivery food</h1>
+              <h1 className="color-white">Food delivery</h1>
               <div className="d-flex">
-                <select className="form-control">
-                  {
-                    locations.map((item, index) => (
-                      <option key={index}>
-                        {item}
-                      </option>
-                    ))
-                  }
+                <select className="form-control" onChange={handleLocationChange}>
+                  <option value="">Select Location</option>
+                  {locations.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
                 </select>
-                <input type="text" className="form-control" placeholder="Select place" />
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search restaurants"
+                  value={searchText}
+                  onChange={handleSearchChange}
+                />
               </div>
             </Col>
           </Row>
@@ -88,25 +111,19 @@ export default function Home() {
       </div>
       <Container className="product-container mt-5">
         <Row>
-
-           {
-            restaurants.map((item, index) => (
-              <Col className='col-lg-4 col-sm-4 col-12'>
-                <div className="card text-white bg-dark mb-3 p-3">
-                  <div key={index}>
-                    <h4 className="card-header bg-white card-title text-dark mb-3">{item.name}</h4>
-                    <div className="card-body p-0">
-                    <p className="card-title"><span>description</span> : {item.description}</p>
-                    <p className="card-title"><span>city</span> : {item.city}</p>
-                    <p className="card-title"><span>address</span> : {item.address}</p>
-                    <p className="card-title"><span>cntnum</span> : {item.cntnum}</p>
-                    </div>
-                   </div>
+          {restaurants.map((item, index) => (
+            <Col className='col-lg-4 col-sm-4 col-12' key={index}>
+              <div className="card text-white bg-dark mb-3 p-3">
+                <h4 className="card-header bg-white card-title text-dark mb-3">{item.name}</h4>
+                <div className="card-body p-0">
+                  <p className="card-title"><span>Description</span>: {item.description}</p>
+                  <p className="card-title"><span>City</span>: {item.city}</p>
+                  <p className="card-title"><span>Address</span>: {item.address}</p>
+                  <p className="card-title"><span>Contact Number</span>: {item.cntnum}</p>
                 </div>
-              </Col>
-            ))
-          }
- 
+              </div>
+            </Col>
+          ))}
         </Row>
       </Container>
       <Customerfooter />
