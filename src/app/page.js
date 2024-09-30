@@ -1,6 +1,4 @@
 'use client'
-
-import Image from "next/image";
 import styles from "./page.module.css";
 import Customerheader from "./__components/CustomerHeader";
 import Customerfooter from "./__components/customerfooter";
@@ -15,8 +13,11 @@ export default function Home() {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    loadRestaurants();
+
     loadLocations();
+
+    loadRestaurants();
+
   }, []);
 
   const loadLocations = async () => {
@@ -28,6 +29,8 @@ export default function Home() {
       }
 
       let data = await response.json();
+
+      console.log(data, response);
 
       if (data.success) {
         setLocations(data.result);
