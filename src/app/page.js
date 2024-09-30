@@ -9,28 +9,22 @@ export default function Home() {
 
   const [locations, setLocations] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const [searchText, setSearchText] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(""); // New state for selected location
 
   useEffect(() => {
-
     loadLocations();
-
     loadRestaurants();
-
   }, []);
 
   const loadLocations = async () => {
     try {
-      let response = await fetch("http://localhost:3000/api/customer/locations");
+      let response = await fetch("http://localhost:3000/api/customer/location");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       let data = await response.json();
-
-      console.log(data, response);
 
       if (data.success) {
         setLocations(data.result);
@@ -46,11 +40,12 @@ export default function Home() {
     let url = "http://localhost:3000/api/customer";
 
     if (params.locations) {
-      url = `?/locations=`+params.locations;
-    } else if (params.restaurants) {
-      url = `?/restaurants`+params.restaurants;
+      url += `?location=${params.locations}`;
     }
-
+else if(params.restaurants)
+  {
+    url += `?restaurant=${params.restaurants}`;
+  }
     try {
       let response = await fetch(url);
 
@@ -70,16 +65,11 @@ export default function Home() {
     }
   };
 
-  const handleLocationChange = (event) => {
+  // Update to handle the selected location
+  const handleListitem = (event) => {
     const selectedValue = event.target.value;
-    setSelectedLocation(selectedValue);
-    loadRestaurants({ locations: selectedValue });
-  };
-
-  const handleSearchChange = (event) => {
-    const searchValue = event.target.value;
-    setSearchText(searchValue);
-    loadRestaurants({ restaurants: searchValue });
+    setSelectedLocation(selectedValue); // Update the selected location state
+    loadRestaurants({ locations: selectedValue }); // Fetch restaurants based on the selected location
   };
 
   return (
@@ -90,9 +80,9 @@ export default function Home() {
         <Container>
           <Row>
             <Col className='col-lg-12 col-sm-12 col-12'>
-              <h1 className="color-white">Food delivery</h1>
+              <h1 className="color-white">Food delivery food</h1>
               <div className="d-flex">
-                <select className="form-control" onChange={handleLocationChange}>
+                <select className="form-control" onChange={handleListitem}>
                   <option value="">Select Location</option>
                   {locations.map((item, index) => (
                     <option key={index} value={item}>
@@ -102,10 +92,9 @@ export default function Home() {
                 </select>
                 <input
                   type="text"
+                  onChange={(event)=>loadRestaurants({restaurants:event.target.value})}
                   className="form-control"
-                  placeholder="Search restaurants"
-                  value={searchText}
-                  onChange={handleSearchChange}
+                  placeholder="Select place"
                 />
               </div>
             </Col>
@@ -119,10 +108,10 @@ export default function Home() {
               <div className="card text-white bg-dark mb-3 p-3">
                 <h4 className="card-header bg-white card-title text-dark mb-3">{item.name}</h4>
                 <div className="card-body p-0">
-                  <p className="card-title"><span>Description</span>: {item.description}</p>
-                  <p className="card-title"><span>City</span>: {item.city}</p>
-                  <p className="card-title"><span>Address</span>: {item.address}</p>
-                  <p className="card-title"><span>Contact Number</span>: {item.cntnum}</p>
+                  <p className="card-title"><span>Description</span> : {item.description}</p>
+                  <p className="card-title"><span>City</span> : {item.city}</p>
+                  <p className="card-title"><span>Address</span> : {item.address}</p>
+                  <p className="card-title"><span>Contact Number</span> : {item.cntnum}</p>
                 </div>
               </div>
             </Col>
