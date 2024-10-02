@@ -4,9 +4,10 @@ import Customerheader from "./__components/CustomerHeader";
 import Customerfooter from "./__components/customerfooter";
 import { Container, Row, Col } from 'react-bootstrap';
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-
+  const router = useRouter();
   const [locations, setLocations] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(""); // New state for selected location
@@ -42,10 +43,9 @@ export default function Home() {
     if (params.locations) {
       url += `?location=${params.locations}`;
     }
-else if(params.restaurants)
-  {
-    url += `?restaurant=${params.restaurants}`;
-  }
+    else if (params.restaurants) {
+      url += `?restaurant=${params.restaurants}`;
+    }
     try {
       let response = await fetch(url);
 
@@ -92,7 +92,7 @@ else if(params.restaurants)
                 </select>
                 <input
                   type="text"
-                  onChange={(event)=>loadRestaurants({restaurants:event.target.value})}
+                  onChange={(event) => loadRestaurants({ restaurants: event.target.value })}
                   className="form-control"
                   placeholder="Select place"
                 />
@@ -104,7 +104,7 @@ else if(params.restaurants)
       <Container className="product-container mt-5">
         <Row>
           {restaurants.map((item, index) => (
-            <Col className='col-lg-4 col-sm-4 col-12' key={index}>
+            <Col className='col-lg-4 col-sm-4 col-12' key={index} onClick={()=>router.push('explore/'+item.name)}>
               <div className="card text-white bg-dark mb-3 p-3">
                 <h4 className="card-header bg-white card-title text-dark mb-3">{item.name}</h4>
                 <div className="card-body p-0">

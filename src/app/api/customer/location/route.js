@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await mongoose.connect(connectionStr, { useNewUrlParser: true, useUnifiedTopology: true });
+  await mongoose.connect(connectionStr);
   let result = await Restaurant.find();
   result = result.map((item)=>item.city);
   result = [...new Set(result.map((item)=>item))]
