@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+ 
+  p {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 28px;
+    line-height: 1.7;
+    font-family: 'Poppins', sans-serif;
+    margin: 30px 0;
+    color: #7A7A7A;
+  }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #313131;
+    font-family: 'Poppins', sans-serif;
+   }
+  
+  h2 {
+    font-size: 3.75rem;
+    color: #393738;
+    font-weight: 600;
+  }
+  
+.main{
+  position: relative;
+}
+
+  .footer-sec{
+    background-color: #ccc;
+    padding: 1rem 0;
+    margin-top: 4rem;
+}
+
+.navbar-expand-lg .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.navbar-nav ul li {
+  display: inline-block;
+}
+
+.table > tbody {
+  vertical-align: middle !important;
+}
+
+.inputerror{
+   color: rgb(241, 57, 57);
+}
+
+table {
+   width: 100%;
+ }
+
+ .table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.table thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+} 
+
+
+.dashboard-main .offset-md-1 {
+  margin-left: 2.333333%;
+}
+
+.table th, .table td button:nth-child(1) {
+  margin-right: 10px;
+}
+
+.height-vh {
+  height: 100vh;
+}
+
+thead, tbody, tfoot, tr, td img {
+  object-fit: cover;
+}
+
+.customer-footer-sec {
+  position: relative;
+  bottom: 0;
+  padding: 40px 0;
+  width: 100%;
+  background-color: #f8f9fa;
+}
+
+.input-wrapper .d-flex input.form-control {
+  margin:0px;
+  height: 60px;
+  border-radius: 0px;
+}
+
+.input-wrapper .d-flex select {
+  width:310px;
+  border-radius: 0px;
+
+}
+.input-wrapper {
+  padding: 45px 0;
+}
+
+
+.input-wrapper{
+  background: url("https://avatars.mds.yandex.net/i?id=2f5ab984f6b5584e94a4d4a8709e34299f298af5-4697086-images-thumbs&n=13") no-repeat;
+  padding: 90px 0;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+ }
+
+.overlay{
+  position: absolute;
+  left: 0px;
+  right:0px;
+  width: 100%;
+  height: 100%;
+  top:0px;
+  bottom:0px;
+  background-color: rgba(0, 0, 0, 0.4); 
+ }
+
+ 
+.input-wrapper .container {
+  position: relative;
+  z-index: 999;
+}
+
+h1.color-white {
+  color: #fff;
+  margin-bottom: 25px;
+  text-transform: capitalize;
+}
+
+.navbar-nav ul.p-0 li a {
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}
