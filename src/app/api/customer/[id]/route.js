@@ -22,8 +22,8 @@ export async function GET(request, content) {
     // Fetch the restaurant details by ID
     const details = await Restaurant.findOne({ _id: new mongoose.Types.ObjectId(id) });
     const foodItems = await foodsSchema.find({ resto_id: new mongoose.Types.ObjectId(id) });
-
     // Return the fetched details
+    
     return NextResponse.json({ success: true, details,foodItems });
   } catch (error) {
     console.error("Error fetching restaurant details:", error);

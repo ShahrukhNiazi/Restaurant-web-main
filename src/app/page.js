@@ -104,7 +104,7 @@ export default function Home() {
       <Container className="product-container mt-5">
         <Row>
           {restaurants.map((item, index) => (
-            <Col className='col-lg-4 col-sm-4 col-12' key={index} onClick={()=>router.push('explore/'+item.name)}>
+            <Col className='col-lg-4 col-sm-4 col-12' key={index} onClick={()=>router.push('explore/'+item.name+"?id="+item._id)}>
               <div className="card text-white bg-dark mb-3 p-3">
                 <h4 className="card-header bg-white card-title text-dark mb-3">{item.name}</h4>
                 <div className="card-body p-0">
@@ -117,6 +117,7 @@ export default function Home() {
             </Col>
           ))}
         </Row>
+        
       </Container>
       <Customerfooter />
     </main>
