@@ -56,8 +56,7 @@ const AddFoodItem = () => {
             alert("food item not deleted");
         }
     }
-
-
+ 
     return (
         <Container>
             <Row>
@@ -76,22 +75,22 @@ const AddFoodItem = () => {
                         <tbody>
                             { foodItems.length > 0 ? (
                                 foodItems.map((item, key) => (
-                                    <tr key={key}>
-                                        <td>{key + 1}</td>
-                                        <td>{item.name}</td>
-                                        <td>{item.price}</td>
-                                        <td>{item.description}</td>
-                                        <td className='text-center'><img src={item.img_path} alt={item.name} width={80} height={80} /></td>
-                                        <td className='text-center'>
+                                    <td key={key}>
+                                        <tr>{key + 1}</tr>
+                                        <tr>{item.name}</tr>
+                                        <tr>{item.price}</tr>
+                                        <tr>{item.description}</tr>
+                                        <tr className='text-center'><img src={item.img_path} alt={item.name} width={80} height={80} /></tr>
+                                        <tr className='text-center'>
                                             <Button className="btn btn-primary" onClick={()=>deletFoodItems(item._id)}>Delete</Button>
                                             <Button className="btn btn-primary" onClick={()=>router.push('dashboard/'+item._id)}>Edit</Button>
-                                        </td>
-                                    </tr>
+                                        </tr>
+                                    </td>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan="6">No food items available</td>
-                                </tr>
+                            <tr>
+                             <td colSpan="6">No food items available</td>
+                            </tr>
                             )}
                         </tbody>
                     </table>

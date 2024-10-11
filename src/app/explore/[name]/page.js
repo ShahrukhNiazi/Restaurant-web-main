@@ -43,32 +43,49 @@ const page = (props) => {
           </Row>
         </Container>
       </div>
-      <div>
+      <div className='pt-5 pb-5'>
         <Container>
           <Row>
-            <Col>
-              <ul>
-                <li><h3>{RestaurantDetails?.contact}</h3></li>
-                <li><h3>{RestaurantDetails?.city}</h3></li>
-                <li><h3>{RestaurantDetails?.address}</h3></li>
-                <li><h3>{RestaurantDetails?.email}</h3></li>
+            <Col className='detail-listing'>
+              <h2 className='mb-5 text-center'>Resturants Details</h2>
+              <ul className='list-inline m-auto text-center'>
+              <li className='rounded'><h3>{RestaurantDetails?.email}</h3></li>
+                <li className='rounded'><h3>{RestaurantDetails?.city}</h3></li>
+                <li className='rounded'><h3>{RestaurantDetails?.address}</h3></li>
+                 <li className='rounded'><h3>{RestaurantDetails?.cntnum}</h3></li>
               </ul>
             </Col>
           </Row>
           <Row>
-            <Col>
-              {foodItems && foodItems.length > 0 ? ( // Check if foodItems is available and not empty
-                foodItems.map((item, index) => (
-                  <div key={index}>
-                    {item.name}
-                    {item.price}
-                    {item.description}
-                  </div>
+           
 
-                ))
-              ) : (
-                <p>No food items available</p> // Fallback message if there are no food items
-              )}
+            <Col>
+              <table border="1" className='table mt-5 mb-5'>
+                <thead>
+                  <tr>
+                   <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   {foodItems && foodItems.length > 0 ? ( // Check if foodItems is available and not empty
+                    foodItems.map((item, index) => (
+                      <tr key={index}>
+                        <td> {item.name}</td>
+                        <td> {item.price}</td>
+                        <td> {item.description}</td>
+                        <td> <img src={item.img_path} alt={item.name} width={80} height={80} /></td>
+                      </tr>
+                    ))
+                  ) : (
+                     <tr>
+                        <td colSpan="6">No food items available</td>
+                     </tr> 
+                  )}
+                </tbody>
+              </table>
             </Col>
           </Row>
         </Container>
