@@ -59,7 +59,7 @@ const AddFoodItem = () => {
  
     return (
         <Container>
-            <Row>
+             <Row>
                 <Col>
                     <table border="1" className='table mt-5 mb-5'>
                         <thead>

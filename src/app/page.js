@@ -1,6 +1,6 @@
 'use client'
 import styles from "./page.module.css";
-import Customerheader from "./__components/CustomerHeader";
+import CustomerHeader from "./__components/CustomerHeader";
 import Customerfooter from "./__components/customerfooter";
 import { Container, Row, Col } from 'react-bootstrap';
 import { useEffect, useState } from "react";
@@ -74,7 +74,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <Customerheader />
+      <CustomerHeader />
       <div className="input-wrapper text-center">
         <div className="overlay"></div>
         <Container>
