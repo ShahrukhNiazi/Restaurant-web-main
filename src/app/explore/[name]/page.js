@@ -1,21 +1,32 @@
-"use client";
+ "use client";
 
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CustomerHeader from '../../__components/CustomerHeader';
 
 const Page = (props) => {
+
   const name = props.params.name;
 
   const [RestaurantDetails, setRestaurantDetails] = useState();
   const [foodItems, setFoodItems] = useState([]);
-  const [cartData, setCartData] = useState(); // This will store the item in the cart
+  const [cartData, setCartData] = useState();
+  
+  // Safely get the cart from localStorage or set it to an empty array if it's not available
+  const [cartStorage, setcartStorage] = useState(() => {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  });
+
+  // Map over cartStorage and set cartIds
+  const [cartIds, setcartIds] = useState(() => {
+    return cartStorage.map((item) => item._id);
+  });
 
   useEffect(() => {
     loadRestaurantsDetails();
   }, []);
 
-    const loadRestaurantsDetails = async () => {
+  const loadRestaurantsDetails = async () => {
     const id = props.searchParams.id;
     let response = await fetch("http://localhost:3000/api/customer/" + id);
     response = await response.json();
@@ -78,9 +89,12 @@ const Page = (props) => {
                           <img src={item.img_path} alt={item.name} width={80} height={80} />
                         </td>
                         <td>
-                          <Button className="btn btn-primary" onClick={() => addToCart(item)}>
-                            Add to cart
-                          </Button>
+                          {
+                              cartIds.includes(item._id) ? <Button>Remove From cart </Button> :
+                              <Button className="btn btn-primary" onClick={() => addToCart(item)}>
+                                Add to cart
+                              </Button>
+                          }
                         </td>
                       </tr>
                     ))
@@ -99,4 +113,4 @@ const Page = (props) => {
   );
 };
 
-export default Page;
+export default Page; 

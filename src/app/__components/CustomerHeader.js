@@ -4,38 +4,40 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Button } from 'react-bootstrap';
 
-
 const CustomerHeader = (props) => {
     const { cartData } = props;
     const cartStorage = JSON.parse(localStorage.getItem('cart'));
     const [cartNumber, setCartNumber] = useState(cartStorage?.length);
     const [cartItem, setCartItem] = useState(cartStorage);
 
-
-
     useEffect(() => {
         console.log(props);
         if (props.cartData) {
             if (cartNumber) {
-                let localCartItems=cartItem;
-                localCartItems.push(JSON.parse(JSON.stringify(props.cartData)))
-                setCartItem(localCartItems);
-                setCartNumber(cartNumber+1)
-                localStorage.setItem('cart', JSON.stringify(localCartItems))
-                  
+
+                if (cartItem[0].resto_id != props.cartData.resto_id) {
+
+                 localStorage.removeItem('cart');
+                 setCartItem(1);
+                 setCartItem([props.cartData]);
+                 localStorage.setItem('cart', JSON.stringify([props.cartData]));
+                     
+                } else {
+                    let localCartItems = cartItem;
+                    localCartItems.push(JSON.parse(JSON.stringify(props.cartData)));
+                    setCartItem(localCartItems);
+                    setCartNumber(cartNumber+1);
+                    localStorage.setItem('cart', JSON.stringify(localCartItems));
+                }
+ 
             } else {
-
-              setCartNumber(1)
-              setCartItem([props.cartData])
-              localStorage.CartItems.setItem('cart',JSON.stringify(localCartItems))
-              localStorage.setItem('cart',JSON.stringify([props.cartData]))
-
+                setCartNumber(1);
+             
             }
         }
-        
-    }, [props.cartData])
+    }, [props.cartData]);
 
- 
+
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
@@ -57,7 +59,7 @@ const CustomerHeader = (props) => {
                                     <Nav.Link href="#">Sign up</Nav.Link>
                                 </li>
                                 <li>
-                                    <Nav.Link href="#">cart({cartNumber?cartNumber:0})</Nav.Link>
+                                    <Nav.Link href="#">cart({cartNumber ? cartNumber : 0})</Nav.Link>
                                 </li>
                             </ul>
                         </Nav>
