@@ -5,37 +5,55 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Container, Button } from 'react-bootstrap';
 
 const CustomerHeader = (props) => {
-    const { cartData } = props;
-    const cartStorage = JSON.parse(localStorage.getItem('cart'));
-    const [cartNumber, setCartNumber] = useState(cartStorage?.length);
-    const [cartItem, setCartItem] = useState(cartStorage);
+    const { cartData, removeCartData } = props;
+
+    // Safely parse the localStorage data
+    let initialCartStorage = [];
+    try {
+        initialCartStorage = JSON.parse(localStorage.getItem('cart')) || [];
+    } catch (e) {
+        console.warn("Failed to parse cart data from localStorage. Resetting cart.");
+        localStorage.removeItem('cart'); // Reset cart if data is invalid
+    }
+
+    const [cartNumber, setCartNumber] = useState(initialCartStorage.length);
+    const [cartItem, setCartItem] = useState(initialCartStorage);
 
     useEffect(() => {
-        console.log(props);
-        if (props.cartData) {
-            if (cartNumber) {
-
-                if (cartItem[0].resto_id != props.cartData.resto_id) {
-
-                 localStorage.removeItem('cart');
-                 setCartItem(1);
-                 setCartItem([props.cartData]);
-                 localStorage.setItem('cart', JSON.stringify([props.cartData]));
-                     
-                } else {
-                    let localCartItems = cartItem;
-                    localCartItems.push(JSON.parse(JSON.stringify(props.cartData)));
-                    setCartItem(localCartItems);
-                    setCartNumber(cartNumber+1);
-                    localStorage.setItem('cart', JSON.stringify(localCartItems));
-                }
- 
+        if (cartData) {
+            // Check if cart already has items and the restaurant ID matches
+            if (cartItem.length > 0 && cartItem[0]?.resto_id !== cartData.resto_id) {
+                // Different restaurant ID, so clear the cart and add the new item
+                console.log('Cleared cart and added new item from a different restaurant');
+                const updatedCart = [cartData];
+                setCartItem(updatedCart);
+                setCartNumber(updatedCart.length);
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
             } else {
-                setCartNumber(1);
-             
+                // Same restaurant or empty cart; add the item to the existing cart
+                const updatedCart = [...cartItem, cartData];
+                setCartItem(updatedCart);
+                setCartNumber(updatedCart.length);
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                console.log('Added item to existing cart');
             }
         }
-    }, [props.cartData]);
+    }, [cartData]);
+
+    useEffect(() => {
+        if (props.removeCartData) {
+            const updatedCart = cartItem.filter((item) => item._id !== props.removeCartData);
+            setCartItem(updatedCart);
+            setCartNumber(updatedCart.length);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+            // Remove the cart from localStorage if it's empty
+            if (updatedCart.length === 0) {
+                localStorage.removeItem('cart');
+            }
+            console.log("Item removed from cart:", props.removeCartData);
+        }
+    }, [props.removeCartData]);
 
 
     return (
@@ -59,7 +77,7 @@ const CustomerHeader = (props) => {
                                     <Nav.Link href="#">Sign up</Nav.Link>
                                 </li>
                                 <li>
-                                    <Nav.Link href="#">cart({cartNumber ? cartNumber : 0})</Nav.Link>
+                                    <Nav.Link href="#">Cart ({cartNumber || 0})</Nav.Link>
                                 </li>
                             </ul>
                         </Nav>
@@ -67,8 +85,7 @@ const CustomerHeader = (props) => {
                 </Container>
             </Navbar>
         </>
-    )
-
-}
+    );
+};
 
 export default CustomerHeader;

@@ -1,26 +1,26 @@
- "use client";
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import CustomerHeader from '../../__components/CustomerHeader';
 
 const Page = (props) => {
-
   const name = props.params.name;
-
   const [RestaurantDetails, setRestaurantDetails] = useState();
   const [foodItems, setFoodItems] = useState([]);
   const [cartData, setCartData] = useState();
-  
-  // Safely get the cart from localStorage or set it to an empty array if it's not available
-  const [cartStorage, setcartStorage] = useState(() => {
-    return JSON.parse(localStorage.getItem('cart')) || [];
-  });
+  const [removeCartData, setRemoveCartData] = useState();
+  const [cartStorage, setCartStorage] = useState([]);
+  const [cartIds, setCartIds] = useState([]);
 
-  // Map over cartStorage and set cartIds
-  const [cartIds, setcartIds] = useState(() => {
-    return cartStorage.map((item) => item._id);
-  });
+  useEffect(() => {
+    // Load cart data from localStorage on the client side
+    if (typeof window !== 'undefined') {
+      const initialCart = JSON.parse(localStorage.getItem('cart')) || [];
+      setCartStorage(initialCart);
+      setCartIds(initialCart.map((item) => item._id));
+    }
+  }, []);
 
   useEffect(() => {
     loadRestaurantsDetails();
@@ -28,22 +28,48 @@ const Page = (props) => {
 
   const loadRestaurantsDetails = async () => {
     const id = props.searchParams.id;
-    let response = await fetch("http://localhost:3000/api/customer/" + id);
-    response = await response.json();
-    if (response.success) {
-      setRestaurantDetails(response.details);
-      setFoodItems(response.foodItems);
+    const response = await fetch(`http://localhost:3000/api/customer/${id}`);
+    const data = await response.json();
+    if (data.success) {
+      setRestaurantDetails(data.details);
+      setFoodItems(data.foodItems);
     }
   };
 
   const addToCart = (item) => {
-    setCartData(item); // Store the entire item, not just item.name
-    console.log("Item added to cart:", item); // This will log the entire item object
+    setCartData(item);
+
+    setCartStorage((prevCartStorage) => {
+      const updatedCart = [...prevCartStorage, item];
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+
+    setCartIds((prevCartIds) => [...prevCartIds, item._id]);
+    console.log("Item added to cart:", item);
+  };
+
+  const removeFromCart = (itemId) => {
+    setRemoveCartData(itemId);
+
+    setCartStorage((prevCartStorage) => {
+      const updatedCart = prevCartStorage.filter((item) => item._id !== itemId);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      if (updatedCart.length === 0) {
+        localStorage.removeItem("cart");
+      }
+
+      return updatedCart;
+    });
+
+    setCartIds((prevCartIds) => prevCartIds.filter((id) => id !== itemId));
+    console.log("Item removed from cart:", itemId);
   };
 
   return (
     <>
-      <CustomerHeader cartData={cartData} /> {/* Pass cartData as prop */}
+      <CustomerHeader cartData={cartData} removeCartData={removeCartData} />
       <div className="input-wrapper">
         <Container>
           <Row className="col-lg-12 col-sm-12 col-12">
@@ -89,12 +115,11 @@ const Page = (props) => {
                           <img src={item.img_path} alt={item.name} width={80} height={80} />
                         </td>
                         <td>
-                          {
-                              cartIds.includes(item._id) ? <Button>Remove From cart </Button> :
-                              <Button className="btn btn-primary" onClick={() => addToCart(item)}>
-                                Add to cart
-                              </Button>
-                          }
+                          {cartIds.includes(item._id) ? (
+                            <Button onClick={() => removeFromCart(item._id)}>Remove From Cart</Button>
+                          ) : (
+                            <Button className="btn btn-primary" onClick={() => addToCart(item)}>Add to Cart</Button>
+                          )}
                         </td>
                       </tr>
                     ))
@@ -113,4 +138,4 @@ const Page = (props) => {
   );
 };
 
-export default Page; 
+export default Page;
